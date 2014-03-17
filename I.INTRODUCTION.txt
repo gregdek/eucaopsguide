@@ -1,0 +1,27 @@
+I. Introduction to The Eucalyptus Production Operations Guide
+
+* * * * *
+
+For every complex software installation, there's ultimately one desperate person who's responsible for keeping the whole thing running.  
+
+Sure, there may be a team of sysadmins on call night and day.  But there's always one person whose job is to sit down with the big boss to explain why a key piece of infrastructure fell over on the most important business day of the year.
+
+The purpose of this guide is to help ensure that such a conversation never happens.  
+
+* * * * *
+
+Eucalyptus installations run the gamut in size, from very small (a single system) to very large (100,000+ cores).  As the system grows in scale, it also grows in complexity.  This guide is intended to help administrators manage very large and complex Eucalyptus installations, with a very high degree of expected uptime.  
+
+The guide covers the following topics: 
+
+* <strong>Pre-production</strong>, in which we will discuss how to build a strong foundation beneath the Eucalyptus cloud;  
+
+* <strong>Production</strong>, in which we will discuss how to monitor the Eucalyptus cloud, how to diagnose small problems, and how to prevent those small problems from turning into large problems;
+
+* <strong>Troubleshooting</strong>, in which we will discuss, in detail, how to track down complex operational problems that may arise;
+
+* and <strong>Recovery</strong>, in which we will discuss the best way of bringing the Eucalyptus cloud back to life after failures.
+
+This guide represents the hard-won wisdom of Eucalyptus administrators around the world, who collectively have run millions of Eucalyptus instances successfully (and not-so-successfully). Disregard its lessons at your peril.
+
+That's enough for introductions. Let's dig in.

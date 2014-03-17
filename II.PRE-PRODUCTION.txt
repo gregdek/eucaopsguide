@@ -1,0 +1,151 @@
+II. Pre-Production: Laying the Foundation.
+
+* * * * *
+
+Eucalyptus, in a minimal proof-of-concept, is simple.  
+
+Eucalyptus, running in production, is complicated.
+
+Why? Because Eucalyptus is a distributed system that manages virtual compute and storage resources across a network.  And managing distributed systems is complicated. It's not necessarily hard -- <em>if you do the right things to manage that complexity</em>.
+
+That's what this whole guide is about.  This part, in particular, is about doing the right things <em>before</em> you install Eucalyptus. 
+
+Let's start with reviewing what the components do.
+
+* * * * *
+
+A. Component Review
+
+(Be sure to review the official documentation can be found at: https://www.eucalyptus.com/docs/eucalyptus/3.4/index.html#install-guide/euca_components.html)
+
+Here's a brief review of what the different Eucalyptus components do, and why they're important.
+
+1. The Cloud Contoller (CLC)
+
+The Cloud Controller (CLC for short) is the brain of Eucalyptus.  When you ask Eucalyptus to do something -- "hey, give me five instances, please" -- you're making a web services request to the CLC.  All service requests go through the CLC, and state information about all Eucalyptus services live in a database on the CLC.  Which means that keeping the CLC happy -- and most importantly, keeping the CLC's database happy -- is extremely important.
+
+When building the CLC for your production environment, you will want to set aside plenty of storage and plenty of memory.  A slow CLC won't affect your cloud instances themselves, but it will affect your ability to send commands to those instances.  If the CLC is juggling state information about 1000 instances in swap space, it'll take longer to get the five instances you asked for -- maybe a lot longer.  Bigger is better for the CLC. 
+
+The CLC also consists of sub-components that can be split out across multiple physical systems -- but more on this later.
+
+[TODO: the above text is being reviewed by Ken. --gdk, 3/14/14]
+
+[TODO: Something here about keeping the Java heap appropriately sized -- do we have scoping guides here?]
+
+2. The Node Controller (NC) 
+
+The Node Controller (NC for short) runs the actual cloud instances.  The more instances you need, the more NCs you will need. 
+
+When building NCs for your production environment, memory and processing power are key.  Storage is also important, but how much you needs depends upon your projected balance of usage between instance storage and elastic block storage.  We'll talk more about storage optimization later.
+
+Another key thing to be aware of: instances on an NC are all competing for processor time.  If an NC has ten instances, and all ten instances have the CPU pegged, all ten instances will suffer degraded performance.  For this reason, it's important to understand the performance characteristics of workloads likely to run on your cloud.  We'll talk more about instance placement optimization strategies later.
+
+3. The Cluster Controller (CC)
+
+The Cluster Controller is a bit tricky; 
+
+[FIXME]
+
+Now let's review how the components fit together into various reference architectures.
+
+* * * * *
+
+B. Reference Architectures
+
+This is really just a pointer to this set of exceptional guidelines for Eucalyptus reference architectures:
+
+https://eucalyptus.atlassian.net/wiki/display/EUCA/Eucalyptus+Reference+Architectures
+
+[FIXME]
+
+Now let's talk more about storage in Eucalyptus.
+
+* * * * *
+
+C. Building your storage strategy.
+
+There are three fundamental types of storage you'll need to consider for your Eucalyptus installation:
+
+* Object storage is managed by Walrus [FIXME, what's the name of that new thing?], and is used to store images and snapshots, and can be used by Eucalyptus users for their own object storage needs.  
+* Block storage is managed by the Storage Controller (SC), and is used for persistent storage in the form of EBS volumes.  
+* Ephemeral storage is part of the instance itself, and lives on the Node Controller (NC) where the instance runs.  When the instance shuts down, the ephemeral storage goes away.  
+
+[FIXME: integrate this: https://www.eucalyptus.com/blog/2013/03/18/eucalyptus-walrus-storage-considerations]
+
+[FIXME: more content here]
+
+Now let's talk more about the network environment around a Eucalyptus installation.
+
+* * * * *
+
+D. Building your network strategy.
+
+[FIXME, way later, this is probably last]
+
+Now let's talk more about how you should be monitoring your Eucalyptus cloud.
+
+* * * * *
+
+E. Building your monitoring strategy.
+
+[FIXME]
+
+Now let's talk about how you should manage your Eucalyptus configuration.
+
+* * * * *
+
+F. Building your configuration management strategy.
+
+[FIXME]
+
+Now let's talk about setting up a backup strategy for Eucalyptus.
+
+* * * * *
+
+G. Building your backup strategy.
+
+[FIXME]
+
+Finally, let's talk about testing your Eucalyptus installation before you roll it out to users.
+
+* * * * *
+
+H. Acceptance Testing: Why it Matters and How To Do It.
+
+[FIXME]
+
+* * * * *
+
+By now, you should have a cloud up and running. Let's talk about how to manage your cloud once it's in production.
+
+
+
+
+
+
+* * * *
+    A. For five nines at the cloud level, build five nines beneath.
+    B. Reviewing the reference architectures.
+        1. A brief overview of what the components do.
+        2. A brief overview of capacity planning.
+        3. Pointers to reference architectures.
+    C. Building your storage strategy.
+        1. The difference between Walrus/S3 and EBS.
+        2. The importance of a SAN for heavy EBS usage.
+           a. Steal Zach's email from 3/4/14: "Storage Controller - Main Bottlenecks?"
+        3. The importance of a gateway for heavy S3 usage.
+    D. Building your network strategy.
+        1. Reviewing the network modes and what features are needed in each.
+        2. Discussion of VLANs.
+        3. Discussion of DNS.
+        4. Discussion of multipath and why to get it right the first time.
+        5. The network tomography tool.
+    E. Building your monitoring strategy.
+    F. Building your config management strategy.
+        1. Why a config management system for Euca is essential
+        2. Briefly: Difference between config files and Java DB properties
+    G. Building your backup strategy.
+        1. The importance of backing up the database.
+    H. Acceptance Testing: Why it Matters and How To Do It.
+        1. Micro-QA.
+        2. eutester.

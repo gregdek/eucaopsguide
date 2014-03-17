@@ -1,0 +1,72 @@
+The Eucalyptus Production Operations Guide
+
+I. Introduction.
+    A. Why is this needed? (Because clouds are complex and interdependent.)
+    B. Who is the audience? (Admins.)
+    C. When should you read this? (When you're ready to run a cloud in production.)
+    D. What are the assumptions?  (Full component separation, config mgmt, monitoring.)
+
+II. Pre-Production: Laying the Foundation.
+    A. For five nines at the cloud level, build five nines beneath.
+    B. Reviewing the reference architectures.
+        1. A brief overview of what the components do. 
+        2. A brief overview of capacity planning.
+        3. Pointers to reference architectures.
+    C. Building your storage strategy.
+        1. The difference between Walrus/S3 and EBS.
+        2. The importance of a SAN for heavy EBS usage.
+           a. Steal Zach's email from 3/4/14: "Storage Controller - Main Bottlenecks?"
+        3. The importance of a gateway for heavy S3 usage.
+    D. Building your network strategy.
+        1. Reviewing the network modes and what features are needed in each.
+        2. Discussion of VLANs.
+        3. Discussion of DNS.
+        4. Discussion of multipath and why to get it right the first time.
+        5. The network tomography tool.
+    E. Building your monitoring strategy.
+    F. Building your config management strategy.
+        1. Why a config management system for Euca is essential
+        2. Briefly: Difference between config files and Java DB properties
+    G. Building your backup strategy.
+        1. The importance of backing up the database.
+    H. Acceptance Testing: Why it Matters and How To Do It.
+        1. Micro-QA.
+        2. eutester.
+
+III. Production: Keeping a Watchful Eye.
+    A. Understanding Eucalyptus Logging.
+        1. Different Log Levels.
+        2. (MAYBE) Correlation IDs?
+    B. Exactly What to Monitor on Components.
+        1. All Components.
+            a. Standard Monitoring Checks (enumerate examples).
+                i. /tmp is writable!
+                ii. other examples.
+            b. Config Management Checks: is it running?
+        2. CLC Components.
+        3. Storage Controller.
+        4. Cluster Controller.
+        5. Node Controller.
+        6. Euca-check: https://github.com/eucalyptus/euca-check
+    C. Exactly What to Monitor Outside of Components.
+        1. Third-party Health Checks.
+            a. SANs.
+        2. Network Tests.
+    D. Capacity Management.
+        1. Tools for managing quotas within Eucalyptus.
+        2. How to manage quotas across groups with IAM.
+        3. How to add storage capacity for volumes.
+        4. How to add 
+    E. Ongoing Functional Tests.
+        1. Micro-QA.
+        2. eutester.
+    F. Backups.
+        1. How exactly to back up the DB.
+        2. How exactly to back up Walrus.
+
+IV. Upgrading: The Terrifying Ambiguity.
+    A. FIXME. (Leave this out of version 1.0?)
+
+IV. Troubleshooting: What to Do When Things Go a Bit Wrong.
+
+V. Recovery: What to Do When Things Go Very Wrong.
