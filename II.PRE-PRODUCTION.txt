@@ -24,13 +24,13 @@ Here's a brief review of what the different Eucalyptus components do, and why th
 
 The Cloud Controller (CLC for short) is the brain of Eucalyptus.  When you ask Eucalyptus to do something -- "hey, give me five instances, please" -- you're making a web services request to the CLC.  All service requests go through the CLC, and state information about all Eucalyptus services live in a database on the CLC.  Which means that keeping the CLC happy -- and most importantly, keeping the CLC's database happy -- is extremely important.
 
-When building the CLC for your production environment, you will want to set aside plenty of storage and plenty of memory.  A slow CLC won't affect your cloud instances themselves, but it will affect your ability to send commands to those instances.  If the CLC is juggling state information about 1000 instances in swap space, it'll take longer to get the five instances you asked for -- maybe a lot longer.  Bigger is better for the CLC. 
+As of Eucalyptus 4.0, the CLC consists of two logical components: the CLC Frontend, which is the listener for all web services; and the CLC Backend, which contains the CLC database and the JDBC listeners.  These components can now be put on different physical hardware, and multiple CLC Frontends can be built to serve a single CLC Backend.  
 
-The CLC also consists of sub-components that can be split out across multiple physical systems -- but more on this later.
+When building CLC components for your production environment, you will want to set aside plenty of storage and plenty of memory.  A slow CLC won't affect your cloud instances themselves, but it will affect your ability to send commands to those instances.  If the CLC is juggling state information about 1000 instances in swap space, it'll take longer to get the five instances you asked for -- maybe a lot longer.  
 
-[TODO: the above text is being reviewed by Ken. --gdk, 3/14/14]
+Thus, in general, CLC Frontends should be optimized to serve web traffic, and the CLC Backend should be optimized for database performance.  We'll discuss this more 
 
-[TODO: Something here about keeping the Java heap appropriately sized -- do we have scoping guides here?]
+[TODO: Something here about keeping the Java heap appropriately sized -- do we have scoping guides here? Chris recommends setting Java heap to be exactly half of the physical memory available on the CLC. Need to vet that with Ken et al.]
 
 2. The Node Controller (NC) 
 
