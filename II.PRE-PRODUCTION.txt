@@ -46,6 +46,14 @@ The Cluster Controller is a bit tricky;
 
 [FIXME]
 
+4. The Storage Controller (SC)
+
+[FIXME]
+
+5. The Object Storage Gateway (OSG)
+
+[FIXME]
+
 Now let's review how the components fit together into various reference architectures.
 
 * * * * *

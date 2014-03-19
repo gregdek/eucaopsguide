@@ -13,7 +13,7 @@ II. Pre-Production: Laying the Foundation.
         2. A brief overview of capacity planning.
         3. Pointers to reference architectures.
     C. Building your storage strategy.
-        1. The difference between Walrus/S3 and EBS.
+        1. The difference between OSG/S3 and EBS.
         2. The importance of a SAN for heavy EBS usage.
            a. Steal Zach's email from 3/4/14: "Storage Controller - Main Bottlenecks?"
         3. The importance of a gateway for heavy S3 usage.
@@ -62,7 +62,7 @@ III. Production: Keeping a Watchful Eye.
         2. eutester.
     F. Backups.
         1. How exactly to back up the DB.
-        2. How exactly to back up Walrus.
+        2. How exactly to back up OSG(?).
 
 IV. Upgrading: The Terrifying Ambiguity.
     A. FIXME. (Leave this out of version 1.0?)
